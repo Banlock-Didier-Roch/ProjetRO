@@ -1,3 +1,4 @@
+import Domain.Contraintes;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class graphique_Controller {
     @FXML
@@ -21,6 +23,11 @@ public class graphique_Controller {
     private int test=0;
     Stage stage;
     Parent root;
+
+
+    @FXML
+    private void initialize() {
+    }
 
     @FXML
     public void methode_simplexe(){

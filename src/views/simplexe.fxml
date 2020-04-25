@@ -58,7 +58,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </Label>
-                  <Label layoutX="14.0" layoutY="32.0" text="max(f) =" AnchorPane.leftAnchor="0.0">
+                  <Label fx:id="labelMaxMin" layoutY="67.0" text="max(f) =" AnchorPane.leftAnchor="0.0">
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
@@ -66,8 +66,8 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="max_min" layoutX="381.0" layoutY="20.0" prefWidth="150.0" />
-                  <Button fx:id="plus_FO" layoutX="506.0" layoutY="53.0" mnemonicParsing="false" text="+" />
+                  <ComboBox fx:id="min_max" layoutX="381.0" layoutY="20.0" prefWidth="150.0" />
+                  <Button layoutX="506.0" layoutY="53.0" mnemonicParsing="false" onAction="#ajoutFo" text="+" />
                   <Label layoutX="547.0" layoutY="2.0" prefHeight="60.0" prefWidth="131.0" text="Contraintes :">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -85,7 +85,16 @@
                      </content>
                   </ScrollPane>
                   <Button fx:id="optimiser" layoutX="355.0" layoutY="161.0" mnemonicParsing="false" text="Optimiser" />
-                  <Button fx:id="plus_C" layoutX="626.0" layoutY="53.0" mnemonicParsing="false" text="+" />
+                  <Button layoutX="626.0" layoutY="53.0" mnemonicParsing="false" onAction="#ajoutContrainte" text="+" />
+                  <Label fx:id="label_fo" layoutX="110.0" layoutY="67.0" prefHeight="67.0" prefWidth="386.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="626.0" layoutY="88.0" mnemonicParsing="false" onAction="#retirerContrainte" prefHeight="25.0" prefWidth="25.0" text="-" />
                </children></AnchorPane>
          </top>
       </BorderPane>
