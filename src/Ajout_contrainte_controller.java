@@ -12,7 +12,11 @@ public class Ajout_contrainte_controller {
     @FXML
     private TextField textField;
     @FXML
+    private TextField valeur;
+    @FXML
     private Label contraint_label;
+    @FXML
+    private Label signe;
     @FXML
     private Button cButton;
 
@@ -31,6 +35,22 @@ public class Ajout_contrainte_controller {
                 }
             }
         });
+        valeur.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    valeur.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+                else{
+                    if(!contraint_label.getText().equalsIgnoreCase("") && cButton.isDisable()){
+                        cButton.setDisable(false);
+                    }else if(valeur.getText().equalsIgnoreCase("")){
+                        cButton.setDisable(true);
+                    }
+                }
+            }
+        });
         parentController = new Simplexe_Controller();
         cButton.setDisable(true);
     }
@@ -39,7 +59,7 @@ public class Ajout_contrainte_controller {
     public void execute(){
 
         if(!textField.getText().equalsIgnoreCase("")) {
-            if (cButton.isDisable()) {
+            if (cButton.isDisable() && !valeur.getText().toString().equalsIgnoreCase("")) {
                 cButton.setDisable(false);
             }
             contrainte.getCoefs().add(Integer.parseInt(textField.getText()));
@@ -58,9 +78,13 @@ public class Ajout_contrainte_controller {
 
     @FXML
     public void confirmer(){
-
+        contrainte.setValeur(Integer.parseInt(valeur.getText()));
         ((Stage) cButton.getScene().getWindow()).close();
-        parentController.addConstraint(contrainte, contraint_label.getText());
+        parentController.addConstraint(contrainte);
 
+    }
+
+    public void setSigne(String txt){
+        signe.setText(txt);
     }
 }

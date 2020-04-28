@@ -34,7 +34,7 @@
                   <Insets />
                </BorderPane.margin>
                <content>
-                  <VBox prefHeight="559.0" prefWidth="981.0" style="-fx-background-color: fff;">
+                  <VBox fx:id="vbox_resolution" prefHeight="559.0" prefWidth="981.0" style="-fx-background-color: fff;">
                      <children>
                         <Label prefHeight="17.0" prefWidth="234.0" text="ETAPES DE RESOLUTION">
                            <font>
@@ -84,7 +84,7 @@
                            </padding></VBox>
                      </content>
                   </ScrollPane>
-                  <Button fx:id="optimiser" layoutX="355.0" layoutY="161.0" mnemonicParsing="false" text="Optimiser" />
+                  <Button fx:id="optimiser" layoutX="355.0" layoutY="161.0" mnemonicParsing="false" onAction="#optimiser" text="Optimiser" />
                   <Button layoutX="626.0" layoutY="53.0" mnemonicParsing="false" onAction="#ajoutContrainte" text="+" />
                   <Label fx:id="label_fo" layoutX="110.0" layoutY="67.0" prefHeight="67.0" prefWidth="386.0">
                      <padding>

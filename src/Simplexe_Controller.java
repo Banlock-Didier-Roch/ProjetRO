@@ -29,13 +29,17 @@ public class Simplexe_Controller {
     @FXML
     private BorderPane border;
     @FXML
-    public VBox vbox_contraintes;
+    private VBox vbox_contraintes;
     @FXML
-    public Label label_fo;
+    private VBox vbox_resolution;
     @FXML
-    public Label labelMaxMin;
+    private Label label_fo;
     @FXML
-    public ComboBox min_max;
+    private Label labelMaxMin;
+    @FXML
+    private ComboBox min_max;
+    @FXML
+    private Button optimiser;
 
 
     private int test = 0;
@@ -50,6 +54,7 @@ public class Simplexe_Controller {
         //Initialisation du combobox
         String valeurs[] = { "Maximisation", "Minimisation" };
         min_max.getItems().addAll(valeurs);
+        min_max.getSelectionModel().selectFirst();
 
         // Create action event
         EventHandler<ActionEvent> event =
@@ -58,9 +63,11 @@ public class Simplexe_Controller {
                     {
                         if(min_max.getValue().toString().equalsIgnoreCase("Maximisation")){
                             labelMaxMin.setText("max(f) =");
+                            refreshContraints();
                         }
                         else if(min_max.getValue().toString().equalsIgnoreCase("Minimisation")){
                             labelMaxMin.setText("min(f) =");
+                            refreshContraints();
                         }
                     }
                 };
@@ -119,6 +126,12 @@ public class Simplexe_Controller {
         Ajout_contrainte_controller controller = loader.getController();
         controller.setParentController(this);
 
+        //Initialisation du signe de l'inéquation
+        if(min_max.getValue().toString().equalsIgnoreCase("Maximisation"))
+            controller.setSigne("<=");
+        if(min_max.getValue().toString().equalsIgnoreCase("Minimisation"))
+            controller.setSigne(">=");
+
     }
 
     @FXML
@@ -148,7 +161,7 @@ public class Simplexe_Controller {
         controller.setParentController(this);
     }
 
-    public  void addConstraint(Contraintes contrainte, String inequation){
+    public  void addConstraint(Contraintes contrainte){
         contraintes.add(contrainte);
         refreshContraints();
     }
@@ -179,6 +192,13 @@ public class Simplexe_Controller {
                 }
                 variableCounter++;
             }
+            //Ajout de la valeur : si c'est une maximistion
+            if(min_max.getValue().toString().equalsIgnoreCase("Maximisation"))
+             l.setText(l.getText() + " <= "+contrainte1.getValeur());
+
+            //Ajout de la valeur : si c'est une minimisation
+            if(min_max.getValue().toString().equalsIgnoreCase("Minimisation"))
+                l.setText(l.getText() + " >= "+contrainte1.getValeur());
             vbox_contraintes.getChildren().add(l);
         }
     }
@@ -205,5 +225,143 @@ public class Simplexe_Controller {
             contraintes.remove(contraintes.size() - 1);
             refreshContraints();
         }
+    }
+
+    @FXML
+    public void optimiser(){
+
+        if(fonctionObjective!=null && !contraintes.isEmpty()){
+            reinitialisation_vboxs();
+
+            int variableCounterCoef=1;
+            Label l = new Label();
+            l.setFont(new Font(14));
+            Label l2 = new Label();
+            l.setStyle("-fx-font-weight: bold");
+            l.setText("Etape 1 : Introduction des variables d'écart");
+            vbox_resolution.getChildren().add(l);
+            historique.getChildren().add(new Label("Etape 1 : Introduction des variables d'écart"));
+
+            //Ecriture des équations avec les variables d'écart
+            int variableCounterContrainte = 1;
+            for(Contraintes contrainte1 : contraintes){
+                variableCounterCoef = 1;
+                l2 = new Label();
+                l2.setFont(new Font(14));
+
+                for(int coef : contrainte1.getCoefs()){
+
+                    if(!l2.getText().equalsIgnoreCase("")) {
+                        l2.setText(l2.getText() + " + "+coef+"x"+variableCounterCoef);
+                    }
+                    else{
+                        l2.setText(""+coef+"x"+variableCounterCoef);
+                    }
+                    variableCounterCoef++;
+                }
+                //Ajout des variables d'écart
+                for(int i=0; i<=contraintes.size()-1;i++){
+                    if(i+1 == variableCounterContrainte) {
+                        l2.setText(l2.getText() + " + 1"+"x"+variableCounterCoef);
+                        variableCounterCoef++;
+                    }else{
+                        l2.setText(l2.getText() + " + 0" + "x" + variableCounterCoef);
+                        variableCounterCoef++;
+                    }
+                }
+                //Ajout de la valeur
+                l2.setText(l2.getText() + " = "+ contrainte1.getValeur() );
+
+                //Ajout dans le vbox du contenu
+                vbox_resolution.getChildren().add(l2);
+                variableCounterContrainte++;
+            }
+
+    //Ecriture du programme de base numéro 1
+            //Ecriture des titres
+            l = new Label();
+            l.setFont(new Font(14));
+            l.setStyle("-fx-font-weight: bold");
+            l.setText("\n\nEtape 2 : Ecriture du programme de base n°1");
+            vbox_resolution.getChildren().add(l);
+            historique.getChildren().add(new Label("\nEtape 2 : Ecriture du programme de base n°1"));
+
+            //Ecriture de la ligne des variables
+            l2 = new Label();
+            l2.setFont(new Font(14));
+            l2.setText("x1");
+            for(int i=1; i<variableCounterCoef-1;i++){
+                l2.setText(l2.getText()+"     x"+(i+1));
+            }
+            vbox_resolution.getChildren().add(l2);
+
+            //Remlissage du tableau
+            variableCounterContrainte = 1;
+            l2 = new Label();
+            for(Contraintes contrainte1 : contraintes){
+                variableCounterCoef = 1;
+                l2 = new Label();
+                l2.setFont(new Font(14));
+
+                for(int coef : contrainte1.getCoefs()){
+
+                    if(!l2.getText().equalsIgnoreCase("")) {
+                        l2.setText(l2.getText()+"      "+coef);
+                    }
+                    else{
+                        l2.setText(" "+coef);
+                    }
+                    variableCounterCoef++;
+                }
+                //Ajout des variables d'écart
+                for(int i=0; i<=contraintes.size()-1;i++){
+                    if((i+1) == variableCounterContrainte) {
+                        l2.setText(l2.getText()+"      1");
+                        variableCounterCoef++;
+                    }else{
+                        l2.setText(l2.getText()+"      0");
+                        variableCounterCoef++;
+                    }
+                }
+                //Ajout de la valeur
+                l2.setText(l2.getText() + "     "+ contrainte1.getValeur() );
+
+                //Ajout dans le vbox du contenu
+                vbox_resolution.getChildren().add(l2);
+                variableCounterContrainte++;
+            }
+        }
+    }
+
+    public void reinitialisation_vboxs(){
+        //Vidage du vbox de resolution
+        vbox_resolution.getChildren().clear();
+        Label l0 = new Label();
+        l0.setFont(new Font(16));
+        l0.setStyle("-fx-font-weight: bold");
+        l0.setText("ETAPES DE RESOLUTION");
+        vbox_resolution.getChildren().add(l0);
+
+        //Vidage du vbox historique
+        historique.getChildren().clear();
+        l0 = new Label();
+        l0.setFont(new Font(16));
+        l0.setStyle("-fx-font-weight: bold");
+        l0.setText("METHODE DE SIMPLEXE");
+        historique.getChildren().add(l0);
+
+        l0 = new Label();
+        l0.setFont(new Font(16));
+        l0.setStyle("-fx-font-weight: bold");
+        l0.setText("Historique");
+        historique.getChildren().add(l0);
+    }
+
+    public ComboBox getMin_max() {
+        return min_max;
+    }
+
+    public void setMin_max(ComboBox min_max) {
+        this.min_max = min_max;
     }
 }

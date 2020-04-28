@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="188.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ajout_contrainte_controller">
+<AnchorPane prefHeight="188.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ajout_contrainte_controller">
    <children>
       <Button layoutX="176.0" layoutY="55.0" mnemonicParsing="false" onAction="#execute" text="Ajouter" />
       <TextField fx:id="textField" layoutX="249.0" layoutY="18.0" />
-      <Label fx:id="contraint_label" layoutX="125.0" layoutY="105.0" prefHeight="25.0" prefWidth="284.0" />
+      <Label fx:id="contraint_label" layoutX="105.0" layoutY="105.0" prefHeight="25.0" prefWidth="232.0" />
       <Label text="Coefficient de la variable :">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -29,5 +29,7 @@
          </font>
       </Label>
       <Button fx:id="cButton" layoutX="324.0" layoutY="147.0" mnemonicParsing="false" onAction="#confirmer" text="Confirmer" />
+      <TextField fx:id="valeur" layoutX="398.0" layoutY="105.0" prefHeight="25.0" prefWidth="69.0" />
+      <Label fx:id="signe" layoutX="359.0" layoutY="105.0" prefHeight="25.0" prefWidth="28.0" text="&gt;=" />
    </children>
 </AnchorPane>
