@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="border" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1244.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphique_Controller">
+<BorderPane fx:id="border" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1244.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphique_Controller">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -34,7 +34,7 @@
                   <Insets />
                </BorderPane.margin>
                <content>
-                  <VBox prefHeight="559.0" prefWidth="981.0" style="-fx-background-color: fff;">
+                  <VBox fx:id="vbox_resolution" prefHeight="559.0" prefWidth="981.0" style="-fx-background-color: fff;">
                      <children>
                         <Label prefHeight="17.0" prefWidth="234.0" text="ETAPES DE RESOLUTION">
                            <font>
@@ -58,7 +58,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </Label>
-                  <Label layoutX="14.0" layoutY="32.0" text="max(f) =" AnchorPane.leftAnchor="0.0">
+                  <Label fx:id="labelMaxMin" layoutX="14.0" layoutY="67.0" text="max(f) =" AnchorPane.leftAnchor="14.0">
                      <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
@@ -66,8 +66,8 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="max_min" layoutX="381.0" layoutY="20.0" prefWidth="150.0" />
-                  <Button fx:id="plus_FO" layoutX="506.0" layoutY="53.0" mnemonicParsing="false" text="+" />
+                  <ComboBox fx:id="min_max" layoutX="381.0" layoutY="20.0" prefWidth="150.0" />
+                  <Button layoutX="506.0" layoutY="53.0" mnemonicParsing="false" onAction="#ajoutFo" text="+" />
                   <Label layoutX="547.0" layoutY="2.0" prefHeight="60.0" prefWidth="131.0" text="Contraintes :">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -84,8 +84,10 @@
                            </padding></VBox>
                      </content>
                   </ScrollPane>
-                  <Button fx:id="optimiser" layoutX="355.0" layoutY="161.0" mnemonicParsing="false" text="Optimiser" />
-                  <Button fx:id="plus_C" layoutX="626.0" layoutY="53.0" mnemonicParsing="false" text="+" />
+                  <Button fx:id="optimiser" layoutX="355.0" layoutY="161.0" mnemonicParsing="false" onAction="#optimiser" text="Optimiser" />
+                  <Button layoutX="626.0" layoutY="53.0" mnemonicParsing="false" onAction="#ajoutContrainte" text="+" />
+                  <Button layoutX="626.0" layoutY="88.0" mnemonicParsing="false" onAction="#retirerContrainte" prefHeight="25.0" prefWidth="25.0" text="-" />
+                  <Label fx:id="label_fo" layoutX="117.0" layoutY="67.0" prefHeight="67.0" prefWidth="386.0" />
                </children></AnchorPane>
          </top>
       </BorderPane>
