@@ -28,31 +28,51 @@ public class Ajout_contrainte_controller {
         // force the field to be numeric only
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    textField.setText(newValue.replaceAll("[^\\d]", ""));
+            public void changed(ObservableValue<? extends String> observableValue,
+                                String oldValue, String newValue) {
+                if(!isValid(newValue)) {
+                    textField.setText(oldValue);
                 }
             }
         });
+
         valeur.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    valeur.setText(newValue.replaceAll("[^\\d]", ""));
+            public void changed(ObservableValue<? extends String> observableValue,
+                                String oldValue, String newValue) {
+                if(!isValid(newValue)) {
+                    valeur.setText(oldValue);
                 }
                 else{
-                    if(!contraint_label.getText().equalsIgnoreCase("") && cButton.isDisable()){
+                    if(!contraint_label.getText().equalsIgnoreCase("") &&cButton.isDisable() && !contraint_label.getText().equalsIgnoreCase("-") && !contraint_label.getText().equalsIgnoreCase(".")){
                         cButton.setDisable(false);
-                    }else if(valeur.getText().equalsIgnoreCase("")){
+                    }if(valeur.getText().equalsIgnoreCase("")){
+                        cButton.setDisable(true);
+                    }if(valeur.getText().equalsIgnoreCase("-")){
+                        cButton.setDisable(true);
+                    }
+                    if(valeur.getText().equalsIgnoreCase(".")){
                         cButton.setDisable(true);
                     }
                 }
             }
         });
+
         parentController = new Simplexe_Controller();
         cButton.setDisable(true);
+    }
+
+    private boolean isValid(final String value) {
+        if (value.length() == 0 || value.equals("-")) {
+            return true;
+        }
+
+        try {
+            Double.parseDouble(value);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
     }
 
     @FXML
@@ -62,12 +82,12 @@ public class Ajout_contrainte_controller {
             if (cButton.isDisable() && !valeur.getText().toString().equalsIgnoreCase("")) {
                 cButton.setDisable(false);
             }
-            contrainte.getCoefs().add(Integer.parseInt(textField.getText()));
+            contrainte.getCoefs().add(Double.parseDouble(textField.getText()));
             if(!contraint_label.getText().equalsIgnoreCase("")) {
-                contraint_label.setText(contraint_label.getText() + " + "+Integer.parseInt(textField.getText())+"x"+contrainte.getCoefs().size());
+                contraint_label.setText(contraint_label.getText() + " + "+Double.parseDouble(textField.getText())+"x"+contrainte.getCoefs().size());
             }
             else{
-                contraint_label.setText(""+Integer.parseInt(textField.getText())+"x"+contrainte.getCoefs().size());
+                contraint_label.setText(""+Double.parseDouble(textField.getText())+"x"+contrainte.getCoefs().size());
             }
         }
     }
@@ -78,7 +98,7 @@ public class Ajout_contrainte_controller {
 
     @FXML
     public void confirmer(){
-        contrainte.setValeur(Integer.parseInt(valeur.getText()));
+        contrainte.setValeur(Double.parseDouble(valeur.getText()));
         ((Stage) cButton.getScene().getWindow()).close();
         parentController.addConstraint(contrainte);
 

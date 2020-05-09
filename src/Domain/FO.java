@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class FO {
 
-    private ArrayList<Integer> coefs;
+    private ArrayList<Double> coefs;
 
     public FO() {
 
@@ -12,15 +12,15 @@ public class FO {
 
     }
 
-    public FO(ArrayList<Integer> coeffs) {
+    public FO(ArrayList<Double> coeffs) {
         this.coefs = coeffs;
     }
 
-    public ArrayList<Integer> getCoefs() {
+    public ArrayList<Double> getCoefs() {
         return coefs;
     }
 
-    public void setCoefs(ArrayList<Integer> coefs) {
+    public void setCoefs(ArrayList<Double> coefs) {
         this.coefs = coefs;
     }
 }
