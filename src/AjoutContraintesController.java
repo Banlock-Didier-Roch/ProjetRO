@@ -75,7 +75,7 @@ public class AjoutContraintesController {
             if (cButton.isDisable() && !valeur.getText().toString().equalsIgnoreCase("")) {
                 cButton.setDisable(false);
             }
-            contrainte.getCoefs().add(Integer.parseInt(textField.getText()));
+            contrainte.getCoefs().add(Double.parseDouble(textField.getText()));
             if(!contraint_label.getText().equalsIgnoreCase("")) {
                 contraint_label.setText(contraint_label.getText() + " + "+Integer.parseInt(textField.getText())+"x"+contrainte.getCoefs().size());
             }

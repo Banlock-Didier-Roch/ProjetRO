@@ -43,7 +43,7 @@ public class AjoutFoController {
             if (cButton.isDisable()) {
                 cButton.setDisable(false);
             }
-            fo.getCoefs().add(Integer.parseInt(textField.getText()));
+            fo.getCoefs().add(Double.parseDouble(textField.getText()));
             if(!contraint_label.getText().equalsIgnoreCase("")) {
                 contraint_label.setText(contraint_label.getText() + " + "+Integer.parseInt(textField.getText())+"x"+fo.getCoefs().size());
             }
