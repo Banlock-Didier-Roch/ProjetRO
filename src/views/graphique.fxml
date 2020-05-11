@@ -9,12 +9,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="border" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1244.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphique_Controller">
+<BorderPane fx:id="border" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1244.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphique_Controller">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -28,25 +29,6 @@
    </top>
    <center>
       <BorderPane BorderPane.alignment="CENTER">
-         <center>
-            <ScrollPane prefHeight="764.0" prefWidth="996.0" style="-fx-background-color: fff; -fx-border-color: grey;">
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-               <content>
-                  <VBox fx:id="vbox_resolution" prefHeight="559.0" prefWidth="981.0" style="-fx-background-color: fff;">
-                     <children>
-                        <Label prefHeight="17.0" prefWidth="234.0" text="ETAPES DE RESOLUTION">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding></VBox>
-               </content></ScrollPane>
-         </center>
          <top>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: grey;" BorderPane.alignment="CENTER">
                <children>
@@ -90,6 +72,18 @@
                   <Label fx:id="label_fo" layoutX="117.0" layoutY="67.0" prefHeight="67.0" prefWidth="386.0" />
                </children></AnchorPane>
          </top>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <SplitPane dividerPositions="0.3" prefHeight="567.0" prefWidth="982.0">
+                    <items>
+                        <VBox fx:id="vbox_resolution" prefHeight="565.0" prefWidth="270.0" style="-fx-background-color: white; -fx-border-color: grey;" />
+                        <AnchorPane fx:id="ancorePaneContenu" prefHeight="565.0" prefWidth="588.0" style="-fx-background-color: white;" />
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+         </center>
       </BorderPane>
    </center>
    <left>

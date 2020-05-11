@@ -24,10 +24,10 @@ public class AjoutFoController {
         // force the field to be numeric only
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    textField.setText(newValue.replaceAll("[^\\d]", ""));
+            public void changed(ObservableValue<? extends String> observableValue,
+                                String oldValue, String newValue) {
+                if(!isValid(newValue)) {
+                    textField.setText(oldValue);
                 }
             }
         });
@@ -45,11 +45,24 @@ public class AjoutFoController {
             }
             fo.getCoefs().add(Double.parseDouble(textField.getText()));
             if(!contraint_label.getText().equalsIgnoreCase("")) {
-                contraint_label.setText(contraint_label.getText() + " + "+Integer.parseInt(textField.getText())+"x"+fo.getCoefs().size());
+                contraint_label.setText(contraint_label.getText() + " + "+Double.parseDouble(textField.getText())+"x"+fo.getCoefs().size());
             }
             else{
-                contraint_label.setText(""+Integer.parseInt(textField.getText())+"x"+fo.getCoefs().size());
+                contraint_label.setText(""+Double.parseDouble(textField.getText())+"x"+fo.getCoefs().size());
             }
+        }
+    }
+
+    private boolean isValid(final String value) {
+        if (value.length() == 0 || value.equals("-")) {
+            return true;
+        }
+
+        try {
+            Double.parseDouble(value);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
         }
     }
 
